@@ -1,4 +1,12 @@
+""" Basic two-directional linked list implementation.
+
+@author Provotorov A. <merqcio11@gmail.com>
+"""
+
+
 class LinkedListItem:
+    """ Two-directional linked list element.
+    """
     def __init__(self, data, prev_item=None, next_item=None):
         self._data = data
         self._prev = prev_item
@@ -15,6 +23,8 @@ class LinkedListItem:
 
 
 class LinkedList:
+    """ Container of linked list element.
+    """
     def __init__(self):
         self._items = []
         self._head = None
