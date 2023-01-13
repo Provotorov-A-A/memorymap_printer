@@ -36,7 +36,7 @@ class MemoryBlock:
     """
     def __init__(self, begin_address, size, identifier=None, unused=False):
         if size <= 0 or begin_address < 0:
-            raise ValueError('MemoryRegion instance should have non-negative start address and positive size!')
+            raise ValueError('MemoryRegion have negative start address or non-positive size!')
         self._begin_address = begin_address
         self._size = size
         self._end_address = self._begin_address + self._size - 1
