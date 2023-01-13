@@ -113,7 +113,7 @@ class MemoryLayout:
             raise MemoryLayoutError(new_mem_block.begin_address(), new_mem_block.end_address(), self._begin_address,
                                     self._end_address)
 
-        region: LinkedListItem = self.regions.head()
+        region = self.regions.head()
         last_region = region
         if not region:
             self.regions.append(new_mem_block)
