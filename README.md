@@ -91,22 +91,22 @@ Example 5
 ```
 from memorymap_printer import MemoryBlock, MemoryLayout, LayoutComparatorConfig, MemoryLayoutPrinter
 
-    m00 = MemoryBlock(0x00, 0x12, 'DR1')
-    ml0 = MemoryLayout(begin_address=0x00, size=0x20)
-    ml0.append_mem_block(m00)
-    ml0.fill_gaps()
+m00 = MemoryBlock(0x00, 0x12, 'DR1')
+ml0 = MemoryLayout(begin_address=0x00, size=0x20)
+ml0.append_mem_block(m00)
+ml0.fill_gaps()
 
-    m10 = MemoryBlock(0x00, 0x10, 'DR1')
-    ml1 = MemoryLayout(begin_address=0x00, size=0x10)
-    ml1.append_mem_block(m10)
-    ml1.fill_gaps()
+m10 = MemoryBlock(0x00, 0x10, 'DR1')
+ml1 = MemoryLayout(begin_address=0x00, size=0x10)
+ml1.append_mem_block(m10)
+ml1.fill_gaps()
 
-    lp = MemoryLayoutPrinter(LayoutComparatorConfig())
-    lp.add_layout(ml0, f'Reference layout (0x{ml0.begin_address():0X}-0x{ml0.end_address():0X})')
-    lp.add_layout(ml1, f'Comp layout (0x{ml1.begin_address():0X}-0x{ml1.end_address():0X})')
+lp = MemoryLayoutPrinter(LayoutComparatorConfig())
+lp.add_layout(ml0, f'Reference layout (0x{ml0.begin_address():0X}-0x{ml0.end_address():0X})')
+lp.add_layout(ml1, f'Comp layout (0x{ml1.begin_address():0X}-0x{ml1.end_address():0X})')
 
-    table_data = lp.to_text()
-    print(table_data)
+table_data = lp.to_text()
+print(table_data)
 ```
 
 ## License
