@@ -26,20 +26,18 @@ class LinkedList:
     """ Container of linked list element.
     """
     def __init__(self):
-        self._items = []
         self._head = None
         self._tail = None
 
     def append(self, data):
         new = LinkedListItem(data)
-        if len(self._items) == 0:
+        if not self._head:
             self._head = new
         else:
             new._prev = self._tail
             self._tail._next = new
 
         self._tail = new
-        self._items.append(new)
 
     def remove(self, item: LinkedListItem):
         if item:
@@ -60,29 +58,25 @@ class LinkedList:
     def insert_after(self, item: LinkedListItem, new_item_data):
         if item:
             new_item = LinkedListItem(new_item_data)
-            if item in self._items:
-                next_item = item.next()
-                new_item._prev = item
-                new_item._next = next_item
-                item._next = new_item
+            next_item = item.next()
+            new_item._prev = item
+            new_item._next = next_item
+            item._next = new_item
 
-            self._items.append(new_item)
             return new_item
 
     def insert_before(self, item: LinkedListItem, new_item_data):
         if item:
             new_item = LinkedListItem(new_item_data)
-            if item in self._items:
-                prev_item = item.prev()
-                new_item._prev = prev_item
-                new_item._next = item
-                item._prev = new_item
-                if prev_item:
-                    prev_item._next = new_item
-                else:
-                    self._head = new_item
+            prev_item = item.prev()
+            new_item._prev = prev_item
+            new_item._next = item
+            item._prev = new_item
+            if prev_item:
+                prev_item._next = new_item
+            else:
+                self._head = new_item
 
-            self._items.append(new_item)
             return new_item
 
     def head(self):
@@ -99,7 +93,12 @@ class LinkedList:
                 return it
 
     def count(self):
-        return len(self._items)
+        it = self.head()
+        ret = 0
+        while it:
+            ret += 1
+            it = it.next()
+        return ret
 
     def to_list(self):
         result = []
