@@ -26,8 +26,13 @@ Example:
 @author Provotorov A. <merqcio11@gmail.com>
 """
 
+import os
 import sys
+import inspect
 from typing import List
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+sys.path.insert(0, currentdir)
 from linked_list import *
 from string_utils import max_strlen_in_list, hex_digits
 
@@ -355,6 +360,9 @@ class MemoryLayoutPrinter:
         else:
             if self._config.show_address_range:
                 ret += f'{address_range}'
+
+        if mem_reg.is_unused():
+            ret = f'{self.settings.unused_data_filler_char*5} {ret} {self.settings.unused_data_filler_char*5}'
         return ret
 
     @staticmethod
@@ -449,7 +457,7 @@ class MemoryLayoutPrinter:
 
         cell_max_len = self._config.cell_max_length    # handy short name
 
-        unused_cell_str = self.settings.unused_data_filler_char * (self._config.cell_max_length - 2*self.settings.text_offset)
+        unused_cell_str = self.settings.unused_data_filler_char * (cell_max_len - 2 * self.settings.text_offset)
         empty_cell_str = ' ' * cell_max_len
 
         result = list()
@@ -510,8 +518,12 @@ class MemoryLayoutPrinter:
 
                     new_data_cell_block_condition = address == cur_layout_item.begin_address()
                     if new_data_cell_block_condition:
+                        # Text of unused cells title formed dynamically
                         if cur_layout_item.is_unused():
-                            cell_text = unused_cell_str
+                            base_text = self._get_mem_region_id(cur_layout_item)
+                            filler_len = (cell_max_len - 2 * self.settings.text_offset - len(base_text)) // 2
+                            filler_str = filler_len*self.settings.unused_data_filler_char
+                            cell_text = f'{filler_str}{base_text}{filler_str}'
                         else:
                             cell_text = self._get_mem_region_id(cur_layout_item)
                         layouts_cur_item_indexes[layout_index] += 1
